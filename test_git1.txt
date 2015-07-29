@@ -1,0 +1,2 @@
+git add file1
+git commit file1 -m "comments"

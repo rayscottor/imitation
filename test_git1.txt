@@ -8,4 +8,4 @@ git log --pretty=online
 git checkout -b dev
 git log --graph --pretty=oneline --abbrev-commit
 git merge branch_name
-
+git merge --no-ff dev   //forbid fast forward which can destroy merge logs

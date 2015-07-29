@@ -12,6 +12,43 @@ git reset --hard HEAD^   //HEAD: present version   HEAD^ or HEAD~1 : last versio
 git reset HEAD file.txt  //back file.txt from index to work area
 git reflog  //look up history commands to make sure used version to go back
 
+git rm file.txt //remove file.txt from repo
+git commit -m "remove file.txt"
+
+git clone git@github.com:rayscottor/imitation.git
+
+git branch //查看本地分支
+git branch -r //查看远程分支
+git checkout -b branch_name  //相当于 git branch branch_name + git checkout branch_name   //创建分支branch_name，并跳转到该分支
+git merge branch_name  //将branch_name分支合并到当前分支
+git branch -d branch_name  //删除branch_name分支
+git branch -D branch_name  //强行删除一个没有合并的branch_name分支
+
+git log --graph 查看分支合并图
+git log --graph --pretty=oneline --abbrev-commit
+
+
+
+
+git remote add origin git@server-name:path/repo-name.git  //关联远程库，并给远程库命名为origin，删除origin关联使用git remote rm origin
+git push -u origin master   //向远程库推送master分支的所有内容（第一次推送时带-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时可以不带-u）
+git push origin master   //推送最新修改
+
+
+git merge --no-ff -m "merge with no-ff" dev  //--no-ff参数禁用fast forward，可以使得merge后会创建一个新的commit，git log --graph可以看到合并的过程记录
+
+git stash //保存工作现场
+git stash list //查看保存的列表
+回复工作现场的方法： 1. git stash apply  恢复后stash的内容并不删除，需通过 git stash drop删除     2. git stash pop 恢复的时候把stash内容一并删除
+当有多个stash内容时，恢复指定的stash，使用git stash apply stash@{0}
+
+
+
+git remote  //查看远程库信息
+git remote -v //查看远程库详细信息
+git checkout -b branch_name origin/branch_name   //本地建立跟远程分支对应的分支
+git branch --set-upstream branch_name origin/branch_name  //本地分支和远程分支建立链接关系 
+
 2. concepts
 Working Directory : your code place
 Repository: hide file .git contains many things, one of the most important place is called index or stage, git also automatically create a first branch called master and use HEAD pointer to point it.
@@ -20,8 +57,20 @@ Repository: hide file .git contains many things, one of the most important place
 
 3. 场景设置
 
-场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file
 
 场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
 
+场景3：当你在本地删除某个文件时，git status就会看到工作区和版本库不一致，现在你有两个选择：
+	
+	一是确实要从版本库中删除该文件，那就用命令git rm删掉，并且git commit下
+	
+	二是删错了，因为版本库里还有呢，所以可以很轻松地把误删的文件恢复到最新版本：git checkout -- file	
 
+场景4： 当你在master和fc分支上分别对test.txt文件修改，git checkout master分支，并git merge fc,会提示发生冲突，打开test.txt文件，修改处理冲突后，在进行commit
+
+场景4: 多人协作的工作模式: 首先，可以试图用git push origin branch-name推送自己的修改；如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；如果合并有冲突，则解决冲突，并在本地提交；
+
+没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+
+这就是多人协作的工作模式，一旦熟悉了，就非常简单。

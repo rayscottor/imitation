@@ -6,5 +6,5 @@ git status
 git diff 
 git log --pretty=online
 git checkout -b dev
-
+git merge branch_name
 

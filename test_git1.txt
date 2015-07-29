@@ -2,3 +2,6 @@ git is a distributed version control system.
 git is a free software.
 git add file1
 git commit file1 -m "comments"
+git status
+git diff 
+git log --pretty=online

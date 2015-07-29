@@ -1,0 +1,27 @@
+1. commands
+git config --global user.name "Your name"
+git config --global user.email "Your email"
+git init  //init dic into a repo for git manage
+git add   // add file into index area
+git commit -m "comments"    // commit all files of index area into master branch and index area will be cleaned after success
+git diff HEAD --file   //look up the file's diff between the newest index and work directory area
+git checkout -- file  //abandon work directory's modify and just back to last commit or add state
+git log --pretty=oneline	
+
+git reset --hard HEAD^   //HEAD: present version   HEAD^ or HEAD~1 : last version and so on
+git reset HEAD file.txt  //back file.txt from index to work area
+git reflog  //look up history commands to make sure used version to go back
+
+2. concepts
+Working Directory : your code place
+Repository: hide file .git contains many things, one of the most important place is called index or stage, git also automatically create a first branch called master and use HEAD pointer to point it.
+
+
+
+3. 场景设置
+
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+
+
